@@ -8,10 +8,11 @@ public class TileManager : MonoBehaviour
     public GameObject spaceTile;
     public Transform startPoint;
     private GameObject space;
-    // Start is called before the first frame update
+
+    //Start is called before the first frame update
     void Start()
     {
-        space = Instantiate(spaceTile, startPoint);
+       space = Instantiate(spaceTile, startPoint);
     }
 
     // Update is called once per frame

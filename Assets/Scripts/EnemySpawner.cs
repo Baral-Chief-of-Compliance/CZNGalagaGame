@@ -5,25 +5,35 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
 
-    public GameObject bigEnemy;
-    public GameObject middleEnemy;
-    public GameObject smallEnemy;
-    public int EnemyCount = 10;
-    public Transform spawnPoint;
+    public GameObject smallEnemyPrefab;
+    public Transform SpawnPoint;
+    public float speed = 1.0f;
+    public Transform target;
+    private GameObject enemy;
 
-    // Start is called before the first frame update
+    List<GameObject> enemiesList = new List<GameObject>(0);
+
+
     void Start()
     {
-        for (int i = 0; i < EnemyCount; i++)
-        {
-            GameObject enemy = Instantiate(smallEnemy, spawnPoint.position, spawnPoint.rotation);
-
-        }
+        enemy = Instantiate(smallEnemyPrefab, SpawnPoint.position, SpawnPoint.rotation);
+        //InvokeRepeating("spawnNewEnimes", 0.1f, 2f);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        enemy.transform.position = Vector2.MoveTowards(enemy.transform.position, target.position, speed);
+    }
+
+    void spawnNewEnimes()
+    {
+        GameObject enemy = Instantiate(smallEnemyPrefab, SpawnPoint.position, SpawnPoint.rotation);
+        enemiesList.Add(enemy);
+
+        foreach (var enem in enemiesList)
+        {
+            Debug.Log(enem.transform.position);
+            enem.transform.position = Vector2.MoveTowards(enem.transform.position, target.position, speed);
+        }
     }
 }
